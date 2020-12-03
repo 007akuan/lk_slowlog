@@ -1,0 +1,2 @@
+class SlowlogSummary < ApplicationRecord
+end

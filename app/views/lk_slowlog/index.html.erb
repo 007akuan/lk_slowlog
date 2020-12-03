@@ -1,0 +1,151 @@
+<h2 align ="center">RDS Slowlog</h2>
+<style type="text/css">
+table.imagetable {
+    font-family: verdana,arial,sans-serif;
+    font-size:11px;
+    color:#333333;
+    border-width: 1px;
+    border-color: #999999;
+    border-collapse: collapse;
+}
+table.imagetable th {
+    background:#b5cfd2;
+    border-width: 1px;
+    padding: 8px;
+    border-style: solid;
+    border-color: #999999;
+}
+table.imagetable td {
+    background:#dcddc0;
+    border-width: 1px;
+    padding: 8px;
+    border-style: solid;
+    border-color: #999999;
+}
+</style>
+
+
+<script type="text/javascript">
+var arr_province = ["请选择","RDS","DRDS"];
+var arr_city = [
+                ["请选择"],
+                <%= raw @dbnames.to_json %>,
+                ['crm_prod_drds','crm_prod'],
+            ];
+onload = function() {
+    var oForm = document.getElementById('form1');
+    var selctopt = document.getElementById('dbopt');
+    var oProvince = oForm.children[0];
+    var oCity = oForm.children[1];
+ 
+    // 添加点击 onchange 事件
+    oProvince.onchange = function() {
+        var _this = this.selectedIndex;
+        // 默认进来高度清零
+        oCity.length = 0;
+        // 指定城市下拉的高度
+        initCity(_this);
+    };
+ 
+    // 初始化下拉列表
+    // init();
+    // init select
+    function init(){
+        var index = 0;
+        // 指定下拉的高度
+        oProvince.length = arr_province.length;
+ 
+        // 循环数组, 把内容写到下拉列表中去
+        for( var i = 0; i < arr_province.length; i++ ){
+            oProvince.options[i].text = arr_province[i];
+            oProvince.options[i].value = arr_province[i];
+        }
+ 
+        // 指定默认索引号
+        oProvince.selectedIndex = index;
+        // 指定城市下拉的高度
+        initCity(index);
+    }
+ 
+    // 城市下拉内容高度
+    function initCity(index){
+        // 指定城市下拉的高度
+        oCity.length = arr_city[index].length;
+
+        var k = 0;
+        // 循环数组, 把内容写到下拉列表中去
+        for( var i = 0; i < arr_city[index].length; i++ ){
+            oCity.options[i].text = arr_city[index][i];
+            oCity.options[i].value = arr_city[index][i];
+
+            <% if params[:dbname].present? %>
+              if (arr_city[index][i] == '<%= params[:dbname] %>') {
+                k = i;
+              }
+            <% end %>
+        }
+
+        oCity.selectedIndex = k;
+    }
+
+   <% if params[:category].present? %>
+
+initCity(document.getElementsByName('category')[0].selectedIndex);
+	<% end %> 
+};
+ 
+</script>
+
+<body>
+
+
+<form id = "form1" accept-charset="UTF-8" action="/lk_slowlog/index" method="get">
+    分  类:  <select name="category" style="width:130px;">
+<option>请选择</option>
+<option value="RDS" <% if params[:category] == 'RDS'%>selected<% end %>>RDS</option>
+<option value="DRDS" <% if params[:category] == 'DRDS'%>selected<% end %>>DRDS</option> 
+</select>
+ 
+    数据库:  <select name="dbname" style="width:130px;"></select>
+
+  <input name="utf8" type="hidden" value="&#x2713;" />
+  <label id="stime">开始时间</label>
+  <input id="user_graduation_day1" name="sdatetime" type="date" value="<%= params[:sdatetime].to_s%>"/>
+  <label id="etime">结束时间</label>
+  <input id="edatetime" name="edatetime" type="date" value="<%= params[:edatetime].to_s%>"/>
+<!--  <label for="q">实例ID:</label>-->
+<!--  <input id="q" name="q" type="text" value="<%= params[:q].to_s %>" />-->
+  <!-- <input name="commit" type="submit" value="查询" />-->
+ <input name="commit" type="submit" value="查询" />
+</form> 
+<table border="1"  class="imagetable" table-layout="fixed">
+  <tr>
+    <th>实例ID</th>
+    <th>数据库</th>
+    <th>解析行数</th>
+    <th>查询时长</th>
+    <th>返回行数</th>
+    <th>SQL明细</th>
+<!--    <th>ExecutionStartTime</th>-->
+  </tr>
+
+
+
+<% @slowlog_detail.each do |sl| %>
+  <tr>
+    <td><%= sl.instance_id %></td>
+    <td><%= sl.DBName %></td>
+    <td><%= sl.ParseRowCounts %></td>
+    <td><%= sl.QueryTimes %></td>
+    <td><%= sl.ReturnRowCounts %></td>
+    <td><%= sl.SQLText %></td>
+   <!-- <td><%= sl.ExecutionStartTime %></td>-->
+  </tr>
+<% end %>
+</table>
+
+<%= paginate  @slowlog_detail %>
+
+
+</body>
+
