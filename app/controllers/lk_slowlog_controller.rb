@@ -14,7 +14,7 @@ class LkSlowlogController < ApplicationController
     # 根据数据库名称查询
     @slowlog_detail = @slowlog_detail.where(dbname: params[:dbname]) if params[:dbname].present?
     
-    @slowlog_detail = @slowlog_detail.page(params[:page]).per(10)
+    @slowlog_detail = @slowlog_detail.page(params[:page]).per(50)
 
   end
 end
