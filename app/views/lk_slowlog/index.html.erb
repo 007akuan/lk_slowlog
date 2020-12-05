@@ -125,6 +125,7 @@ initCity(document.getElementsByName('category')[0].selectedIndex);
     <th>查询时长</th>
     <th>返回行数</th>
     <th>执行时间</th>
+    <th>来源</th>
     <th>SQL明细</th>
 <!--    <th>ExecutionStartTime</th>-->
   </tr>
@@ -139,6 +140,7 @@ initCity(document.getElementsByName('category')[0].selectedIndex);
     <td><%= sl.QueryTimes %></td>
     <td><%= sl.ReturnRowCounts %></td>
     <td><%= sl.ExecutionStartTime.strftime("%F %T") %></td>
+    <td><%= sl.HostAddress %></td>
     <td><%= sl.SQLText %></td>
    <!-- <td><%= sl.ExecutionStartTime %></td>-->
   </tr>
