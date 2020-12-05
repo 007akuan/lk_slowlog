@@ -110,9 +110,13 @@ initCity(document.getElementsByName('category')[0].selectedIndex);
 
   <input name="utf8" type="hidden" value="&#x2713;" />
   <label id="stime">开始时间</label>
-  <input id="user_graduation_day1" name="sdatetime" type="date" value="<%= params[:sdatetime].to_s%>"/>
-  <label id="etime">结束时间</label>
-  <input id="edatetime" name="edatetime" type="date" value="<%= params[:edatetime].to_s%>"/>
+  <input id="user_graduation_day1" name="sdatetime" type="datetime-local" value="<%= params[:sdatetime].to_s%>"/>
+  <label id="qttime">查询时长超过</label>
+  <input id='qt' name="querytimes" type="number" style="width:50px" value="<%= params[:querytimes]%>"/>
+  
+  <label id="qttimes">秒</label>
+ <!-- <label id="etime">结束时间</label>
+  <input id="edatetime" name="edatetime" type="date" value="<%= params[:edatetime].to_s%>"/>-->
 <!--  <label for="q">实例ID:</label>-->
 <!--  <input id="q" name="q" type="text" value="<%= params[:q].to_s %>" />-->
   <!-- <input name="commit" type="submit" value="查询" />-->
