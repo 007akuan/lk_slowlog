@@ -1,8 +1,6 @@
 source 'https://gems.ruby-china.com/'
 git_source(:github) { |repo| "https://github.com/#{repo}.git" }
 
-ruby '2.7.0'
-
 # Bundle edge Rails instead: gem 'rails', github: 'rails/rails'
 #gem 'rails', '~> 6.0.3', '>= 6.0.3.4'
 gem 'rails', '~> 5.2', '>= 5.2.3'
@@ -32,6 +30,9 @@ gem 'bootsnap', '>= 1.4.2', require: false
 
 gem 'kaminari'
 
+# Kills pumas, the code kind
+gem 'puma_worker_killer', '~> 0.1.0'
+
 group :development, :test do
   # Call 'byebug' anywhere in the code to stop execution and get a debugger console
   gem 'byebug', platforms: [:mri, :mingw, :x64_mingw]
@@ -44,6 +45,13 @@ group :development do
   # Spring speeds up development by keeping your application running in the background. Read more: https://github.com/rails/spring
   gem 'spring'
   gem 'spring-watcher-listen', '~> 2.0.0'
+
+  # Rails specific Capistrano tasks
+  gem 'capistrano-rails', '~> 1.6'
+  # Unicorn specific Capistrano tasks
+  gem 'capistrano3-puma', '~> 5.0'
+  # RVM integration for Capistrano
+  gem 'capistrano-rvm', '~> 0.1.2'
 end
 
 group :test do

@@ -8,6 +8,7 @@
 /.bundle
 
 /config/database.yml
+/config/puma.rb
 
 # Ignore the default SQLite database.
 /db/*.sqlite3
@@ -41,3 +42,10 @@
 /yarn-error.log
 yarn-debug.log*
 .yarn-integrity
+
+
+db/schema.rb
+
+.rvmrc
+.idea/
+.vscode/
