@@ -11,7 +11,7 @@ class LkSlowlogController < ApplicationController
     #@slowlog_detail = @slowlog_detail.where(ExecutionStartTime: params[:sdatetime]..params[:edatetime]) if params[:sdatetime].present?
     @slowlog_detail = @slowlog_detail.where("1=1 and ExecutionStartTime>=?",params[:sdatetime]) if params[:sdatetime].present?
 
-    @slowlog_detail = @slowlog_detail.where("1=1 and QueryTimes>=?",params[:querytimes])
+    @slowlog_detail = @slowlog_detail.where("1=1 and QueryTimes>=?",params[:querytimes]) if params[:querytimes].present?
     
     # 根据实例ID查询    
     #@slowlog_detail = @slowlog_detail.where(instance_id: params[:instance_id]) if params[:instance_id].present?
