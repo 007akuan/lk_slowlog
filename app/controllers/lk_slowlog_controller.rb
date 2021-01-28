@@ -6,7 +6,7 @@ class LkSlowlogController < ApplicationController
 
     @slowlog_detail =SlowlogDetail.select("id,instance_id,ReturnRowCounts,SQLText,ParseRowCounts,QueryTimes,DBName,ExecutionStartTime,HostAddress").
       where.not("instance_id in('rm-m5eqyh7u824r4tfho') and DBName in('ikcrm_production')").
-      where("1 = 1 and SQLText like '%select%'")
+      where("1 = 1 and source_user not like '%read%' and SQLText like '%select%'")
     # "a > #{params[:b]} or "
     #@slowlog_detail = @slowlog_detail.where(ExecutionStartTime: params[:sdatetime]..params[:edatetime]) if params[:sdatetime].present?
     @slowlog_detail = @slowlog_detail.where("1=1 and ExecutionStartTime>=?",params[:sdatetime]) if params[:sdatetime].present?
